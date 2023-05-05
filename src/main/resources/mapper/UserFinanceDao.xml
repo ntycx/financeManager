@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.financeManager.dao.UserFinanceDao">
+
+    <resultMap type="com.example.financeManager.entity.TbUserFinance" id="UserFinanceMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="reimbursementBalance" column="reimbursement_balance" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryByUserId" resultMap="UserFinanceMap">
+        select user_id,
+               reimbursement_balance
+        from tb_user_finance
+        where user_id = #{userId}
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into tb_user_finance(user_id, reimbursement_balance)
+        values (#{userId}, #{reimbursementBalance})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update" parameterType="com.example.financeManager.entity.TbUserFinance">
+        update tb_user_finance
+        <set>
+            <if test="reimbursementBalance != null">
+                reimbursement_balance = #{reimbursementBalance},
+            </if>
+        </set>
+        where userId = #{userId}
+    </update>
+</mapper>
+
